@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config.from_object("config")
 
 # Extensiones
-CORS(app, origins=config.CORS_ORIGINS)
+CORS(app, origins=config.CORS_ORIGINS, supports_credentials=True)
 JWTManager(app)
 
 # Registrar blueprints
@@ -24,4 +24,4 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(tasks_bp)
 
 if __name__ == "__main__":
-    app.run(ssl_context=None, debug=config.DEBUG)
+    app.run(host="localhost", port=5000, debug=config.DEBUG)

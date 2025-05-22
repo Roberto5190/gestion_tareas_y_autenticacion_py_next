@@ -30,7 +30,7 @@ export default async function TasksPage() {
         <div className="max-w-lg mx-auto space-y-6">
             <h2 className="text-2xl">Mis Tareas</h2>
             {/* TaskForm es "use client" y también utiliza fetch con cookies */}
-            <TaskForm />
+            <TaskForm jwt={jwt}/>
             <TaskList tasks={tasks} />
         </div>
     );

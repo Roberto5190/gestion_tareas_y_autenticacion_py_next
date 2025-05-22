@@ -1,13 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "../utils/api";
 
-/**
- * Formulario para crear una nueva tarea.
- * Al enviar, hace POST a /api/tasks y refresca la página.
- */
-export default function TaskForm() {
+
+export default function TaskForm({ onAdd, jwt }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [error, setError] = useState("");
@@ -15,16 +13,34 @@ export default function TaskForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+
+        console.log(jwt);
+        
+
+        if (!jwt) {
+            setError("No estás autenticado");
+            return;
+        }
+
         try {
-            await api("/tasks", {
+            // 2️⃣ Llamas al API incluyendo tu header Authorization
+            const newTask = await api("/tasks", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${jwt}`,
+                },
                 body: JSON.stringify({ title, description }),
+            }).then(res => {
+                if (!res.ok) throw new Error(res.status);
+                return res.json();
             });
-            // Limpia el formulario y refresca SSR
+
+            // 3️⃣ Si todo va bien, limpias el formulario y actualizas la lista
             setTitle("");
             setDescription("");
-            router.refresh();
+            onAdd?.(newTask);
+            router.refresh(); // o dependes de onAdd para actualizar
         } catch (err) {
             setError("Error al crear la tarea");
         }

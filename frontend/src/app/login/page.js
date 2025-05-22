@@ -16,7 +16,7 @@ export default function LoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: u, password: p }),
       });
-      // el backend debe colocar la cookie httpOnly
+      localStorage.setItem("token", access_token);
       router.push("/tasks");
     } catch {
       alert("Credenciales inválidas");

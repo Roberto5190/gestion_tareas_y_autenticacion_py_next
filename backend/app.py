@@ -12,6 +12,9 @@ import config
 # Crear app
 app = Flask(__name__)
 app.config.from_object("config")
+# app.config['JWT_SECRET_KEY'] = 'super-secret'
+# Desactivar strict_slashes global: ninguna ruta hará redirect por “/” o sin “/”
+app.url_map.strict_slashes = False
 
 # Extensiones
 CORS(app, origins=config.CORS_ORIGINS, supports_credentials=True)

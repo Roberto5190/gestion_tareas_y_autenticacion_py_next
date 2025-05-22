@@ -12,6 +12,13 @@ JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY", SECRET_KEY)
 # Duración del token
 JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=1)
 
+# COOKIES
+JWT_TOKEN_LOCATION = ["cookies", "headers"]
+JWT_COOKIE_SECURE   = False       # en dev HTTP
+JWT_COOKIE_SAMESITE = "Strict"
+JWT_ACCESS_COOKIE_PATH  = "/"
+JWT_REFRESH_COOKIE_PATH  = "/"
+
 # CORS
 CORS_ORIGINS = [
     "http://localhost:3000",

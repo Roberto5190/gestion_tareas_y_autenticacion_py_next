@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { api } from "../utils/api";
+import { useRouter } from "next/router";
+import api  from "../utils/api";
 
 
 export default function TaskForm({ onAdd, jwt }) {
@@ -15,12 +15,6 @@ export default function TaskForm({ onAdd, jwt }) {
         e.preventDefault();
 
         console.log(jwt);
-        
-
-        if (!jwt) {
-            setError("No estás autenticado");
-            return;
-        }
 
         try {
             // 2️⃣ Llamas al API incluyendo tu header Authorization

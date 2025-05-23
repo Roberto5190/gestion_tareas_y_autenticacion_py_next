@@ -1,30 +1,21 @@
-// export async function api(path, opts = {}) {
-//     const res = await fetch(`/api${path}`, {
-//         credentials: 'include',    // PARA enviar la cookie httpOnly
-//         ...opts,
-//         headers: {
-//             'Content-Type': 'application/json',
-//             ...opts.headers,
-//         },
-//     })
-//     if (!res.ok) throw new Error(`HTTP ${res.status}`)
-//     return res.json()
-// }
+import axios from 'axios';
 
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api',
+  withCredentials: true,          // imprescindible: envía la cookie JWT
+});
 
-export async function api(path, opts = {}) {
+/* ─── Interceptor de respuesta: si el backend responde 401 → vuelve a /login ─── */
+api.interceptors.response.use(
+  (res) => res,
+  (err) => {
+    if (err.response?.status === 401 && typeof window !== 'undefined') {
+      localStorage.removeItem('loggedIn');
+      localStorage.removeItem('username');
+      if (window.location.pathname !== '/login') window.location.href = '/login';
+    }
+    return Promise.reject(err);
+  },
+);
 
-
-    
-    const res = await fetch(`/api${path}`, {
-        credentials: "include", // si usas cookies
-        ...opts,
-        headers: {
-            "Content-Type": "application/json",
-            ...(token && { Authorization: `Bearer ${jwt}` }),
-            ...opts.headers,
-        },
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-}
+export default api;

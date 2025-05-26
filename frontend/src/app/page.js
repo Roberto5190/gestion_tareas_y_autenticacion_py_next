@@ -1,15 +1,22 @@
 "use client";
+import { UserContext } from "@/context/UserContext";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Fragment, useEffect } from "react";
+import { useContext } from "react";
 
 export default function Home() {
-
-
+  const { user } = useContext(UserContext)
+  
   return (
-    <>
-      <Link href="/login">Login</Link>
-      <Link href="/register">Register</Link>
+    <> 
+      { user ? 
+        `Bienvenido ${user.username}` : 
+      <>
+        <Link href="/login">Login</Link>
+        <Link href="/register">Register</Link>
+      </>
+      }
+      
+      
     </>
   )
 }

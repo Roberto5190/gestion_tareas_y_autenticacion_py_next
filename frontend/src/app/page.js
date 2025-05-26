@@ -5,7 +5,7 @@ import { useContext } from "react";
 
 export default function Home() {
   const { user } = useContext(UserContext)
-  
+    
   return (
     <> 
       { user ? 

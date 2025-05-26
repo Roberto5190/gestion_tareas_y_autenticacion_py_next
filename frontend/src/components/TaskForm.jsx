@@ -7,7 +7,7 @@ import { api } from "../utils/api";
  * Formulario para crear una nueva tarea.
  * Al enviar, hace POST a /api/tasks y refresca la página.
  */
-export default function TaskForm() {
+export default function TaskForm({ jwt, onAdd }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [error, setError] = useState("");
@@ -15,17 +15,18 @@ export default function TaskForm() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+
         try {
-            await api("/tasks", {
+            // El helper api() ya inyecta X-CSRF-TOKEN y credentials
+            const newTask = await api("/tasks", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ title, description }),
             });
-            // Limpia el formulario y refresca SSR
+
             setTitle("");
             setDescription("");
-            router.refresh();
-        } catch (err) {
+            onAdd(newTask);
+        } catch {
             setError("Error al crear la tarea");
         }
     }

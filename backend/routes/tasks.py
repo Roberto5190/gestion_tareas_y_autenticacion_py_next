@@ -14,9 +14,13 @@ def list_tasks():
     return jsonify([t.__dict__ for t in tasks]), 200
 
 @tasks_bp.post("/")
-# @jwt_required()
+@jwt_required()
 def create_task():
     username = get_jwt_identity()
     data = request.get_json()
-    task = TaskManager.create(DataStore.users[username], data["title"], data.get("description",""))
+    task = TaskManager.create(
+        DataStore.users[username],
+        data["title"],
+        data.get("description","")
+        )
     return jsonify(task.__dict__), 201

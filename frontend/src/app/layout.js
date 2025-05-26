@@ -2,6 +2,7 @@
 import "../styles/globals.css";
 import { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
+import { UserProvider } from "@/context/UserContext";
 
 export default function RootLayout({ children }) {
   const [dark, setDark] = useState(false);
@@ -17,11 +18,14 @@ export default function RootLayout({ children }) {
     document.documentElement.classList.toggle("dark", next);
   }
 
+
   return (
     <html lang="es">
       <body>
-        <Navbar dark={dark} onToggle={toggleTheme} />
-        <main className="p-6">{children}</main>
+        <UserProvider>
+          <Navbar dark={dark} onToggle={toggleTheme} />
+          <main className="p-6">{children}</main>
+        </UserProvider>
       </body>
     </html>
   );

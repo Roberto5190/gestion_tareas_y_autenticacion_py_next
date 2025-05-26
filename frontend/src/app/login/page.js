@@ -1,12 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
+import { UserContext } from "../../context/UserContext"
 import { api } from "../../utils/api";
 
 export default function LoginPage() {
   const [u, setU] = useState("");
   const [p, setP] = useState("");
   const router = useRouter();
+  const { setUser } = useContext(UserContext)
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -17,6 +19,16 @@ export default function LoginPage() {
         body: JSON.stringify({ username: u, password: p }),
       });
       localStorage.setItem("token", access_token);
+
+
+      // Obtener datos del usuario usando el token
+      const userData = await api("/user", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${access_token}`
+        }
+      })
+      setUser(userData.user) //actualizamos el contexto para actualizar el Navbar
       router.push("/tasks");
     } catch {
       alert("Credenciales inválidas");

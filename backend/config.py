@@ -3,7 +3,7 @@ import os
 from datetime import timedelta
 
 load_dotenv()
-
+DEBUG=True
 # Secretos y tiempos de expiración: SÍ en .env
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", SECRET_KEY)

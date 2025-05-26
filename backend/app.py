@@ -17,8 +17,10 @@ JWTManager(app)
 # Registrar blueprints
 from routes.auth import auth_bp
 from routes.tasks import tasks_bp
+from routes.user import user_bp
 app.register_blueprint(auth_bp)
 app.register_blueprint(tasks_bp)
+app.register_blueprint(user_bp)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=config.DEBUG)

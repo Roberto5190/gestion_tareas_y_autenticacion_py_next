@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from flask_jwt_extended import create_access_token, set_access_cookies
 from utils.store import AuthManager
 
@@ -13,11 +13,14 @@ def register():
     except ValueError as e:
         return jsonify(error=str(e)), 400
 
+
 @auth_bp.post("/login")
 def login():
     data = request.get_json()
+    
     try:
         user = AuthManager.authenticate(data["username"], data["password"])
+        session['username'] = user.username #guardamos el username en sesion
         token = create_access_token(identity=user.username)
         resp = jsonify(msg="Login OK")
         # Guarda el JWT en una cookie httpOnly

@@ -22,6 +22,10 @@ class AuthManager:
         if not user or not user.check_password(password): #not user -> comprubea si user es None(inexistente) y comprueba la contraseña enviada
             raise ValueError("Credenciales inválidas")
         return user #si la autenticacion es correcta se devuelve la instancia del usuario
+    
+    @staticmethod
+    def username(username):
+        return DataStore.users.get(username)
 
 class TaskManager:
     @staticmethod

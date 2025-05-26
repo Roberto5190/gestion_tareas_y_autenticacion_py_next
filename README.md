@@ -5,8 +5,8 @@ Sigue estos pasos para poner en marcha el proyecto en tu máquina local.
 bash
 Copiar
 Editar
-``git clone <URL_DE_TU_REPOSITORIO>
-cd <NOMBRE_DEL_REPOSITORIO>``
+```git clone <URL_DE_TU_REPOSITORIO>```
+``cd <NOMBRE_DEL_REPOSITORIO>``
 2. Configura y activa el entorno virtual (venv)
 bash
 Copiar

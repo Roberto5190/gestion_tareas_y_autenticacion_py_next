@@ -1,6 +1,7 @@
-from flask import jsonify, session, Blueprint
+from flask import jsonify, session, request, Blueprint
 from utils.store import DataStore
-
+from utils.store import DataStore
+from models.user import User
 
 user_bp = Blueprint("user", __name__, url_prefix="/api/user")
 
@@ -15,3 +16,4 @@ def username():
         return jsonify({'user': None}), 404
 
     return jsonify({'user': {'username': user.username}})
+

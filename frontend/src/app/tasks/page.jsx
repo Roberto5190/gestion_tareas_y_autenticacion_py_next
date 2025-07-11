@@ -17,7 +17,7 @@ export default async function TasksPage() {
     }
 
     // 2. Llamada al backend incluyendo la cookie automáticamente
-    const res = await fetch("http://127.0.0.1:5000/api/tasks", {
+    const res = await fetch("http://flask:5000/api/tasks", {
         headers: {
             'Authorization': `Bearer ${jwt}`
         }

@@ -21,6 +21,8 @@ def login():
     try:
         user = AuthManager.authenticate(data["username"], data["password"])
         session['username'] = user.username #guardamos el username en sesion
+        print("Usuario guardado en sesión:", session.get('username'))
+
         token = create_access_token(identity=user.username)
         resp = jsonify(msg="Login OK")
         # Guarda el JWT en una cookie httpOnly
